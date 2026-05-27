@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard สรุปการซื้อสลาก งานประกาศเกียรติคุณ ปี 2568</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #0B1F3A;
+      --red: #8B1E24;
+      --red-dark: #71181D;
+      --ink: #172033;
+      --muted: #64748b;
+      --line: #e5e7eb;
+      --soft: #f8fafc;
+      --white: #ffffff;
+      --shadow: 0 14px 40px rgba(11, 31, 58, 0.08);
+      --radius: 24px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Prompt', sans-serif;
+      background: var(--white);
+      color: var(--ink);
+    }
+    .page { max-width: 1280px; margin: 0 auto; padding: 28px 20px 48px; }
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 32px;
+      background: var(--white);
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+    .hero-main { padding: 40px; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--navy); color: #fff;
+      padding: 9px 16px; border-radius: 999px;
+      font-size: 14px; margin-bottom: 18px;
+    }
+    h1 { margin: 0; color: var(--navy); font-size: clamp(28px, 4vw, 48px); line-height: 1.2; letter-spacing: -0.02em; }
+    .hero-main p { margin: 16px 0 0; color: var(--muted); line-height: 1.8; max-width: 760px; }
+    .hero-side {
+      background: var(--navy); color: white; padding: 40px;
+      display: flex; flex-direction: column; justify-content: space-between; gap: 24px;
+    }
+    .hero-label { color: #dbeafe; font-size: 14px; }
+    .hero-money { font-size: 36px; font-weight: 800; margin-top: 8px; }
+    .selected-box { background: rgba(255,255,255,.11); border-radius: 20px; padding: 16px; }
+    .selected-box strong { display:block; margin-top: 6px; line-height: 1.45; }
+
+    .panel { border: 1px solid var(--line); border-radius: var(--radius); background: white; box-shadow: var(--shadow); }
+    .filter-panel { padding: 18px; margin-bottom: 18px; display: flex; justify-content: space-between; gap: 18px; align-items: center; flex-wrap: wrap; }
+    .filter-title { display: flex; gap: 12px; align-items: center; }
+    .icon { width: 44px; height: 44px; border-radius: 16px; display: grid; place-items: center; color: white; background: var(--red); flex: 0 0 auto; }
+    .filter-title h2 { margin: 0; color: var(--navy); font-size: 18px; }
+    .filter-title p { margin: 3px 0 0; color: var(--muted); font-size: 13px; }
+    .filter-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .quick-actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
+    .quick-btn { background:var(--navy); color:white; }
+    .quick-btn:hover { background:#07162a; }
+    .quick-btn.red { background:var(--red); }
+    .quick-btn.red:hover { background:var(--red-dark); }
+    select, input {
+      font-family: inherit; color: var(--navy); background: white;
+      border: 1px solid #d7dce3; border-radius: 16px;
+      padding: 13px 14px; outline: none; min-width: 280px; font-size: 14px;
+    }
+    input { min-width: 230px; }
+    select:focus, input:focus { box-shadow: 0 0 0 4px rgba(11,31,58,.10); border-color: var(--navy); }
+    button {
+      border: none; border-radius: 16px; padding: 13px 18px;
+      font-family: inherit; cursor: pointer; background: var(--red); color: white; font-weight: 600;
+    }
+    button:hover { background: var(--red-dark); }
+
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 18px 0; }
+    .stat { border: 1px solid var(--line); border-radius: 22px; padding: 20px; background: white; box-shadow: var(--shadow); display:flex; justify-content:space-between; gap:12px; cursor:pointer; transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+    .stat:hover { transform: translateY(-2px); border-color: rgba(11,31,58,.28); box-shadow: 0 18px 46px rgba(11,31,58,.12); }
+    .stat small { color: var(--muted); }
+    .stat .value { color: var(--navy); font-size: 26px; font-weight: 800; margin: 8px 0 2px; }
+    .stat .detail { color: var(--muted); font-size: 12px; }
+    .stat-icon { background: var(--navy); color:white; border-radius:16px; width:46px; height:46px; display:grid; place-items:center; flex:0 0 auto; }
+    .stat.red .stat-icon { background: var(--red); }
+
+    .grid-3 { display: grid; grid-template-columns: 2fr 1fr; gap: 18px; margin-bottom: 18px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 18px; }
+    .card { padding: 24px; }
+    .card-head { display: flex; justify-content: space-between; align-items: start; gap: 16px; margin-bottom: 20px; }
+    .card h2 { margin: 0; color: var(--navy); font-size: 21px; }
+    .card p.sub { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
+    .bar-row { margin-bottom: 15px; }
+    .bar-meta { display:flex; justify-content:space-between; gap: 12px; font-size: 14px; margin-bottom: 7px; }
+    .bar-name { color: #334155; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .bar-count { color: var(--navy); font-weight: 700; flex: 0 0 auto; }
+    .bar-track { height: 10px; background: #eef2f7; border-radius: 999px; overflow:hidden; }
+    .bar-fill { height:100%; background: var(--navy); border-radius:999px; transition: width .25s ease; }
+    .bar-fill.red { background: var(--red); }
+
+    .status-box { border-radius: 18px; padding: 16px; margin-bottom: 12px; border: 1px solid transparent; }
+    .status-box strong { display:block; font-size: 30px; margin: 4px 0; }
+    .status-active { background: rgba(11,31,58,.05); border-color: rgba(11,31,58,.10); color: var(--navy); }
+    .status-inactive { background: rgba(139,30,36,.05); border-color: rgba(139,30,36,.10); color: var(--red); }
+    .status-missing { background: var(--soft); border-color: var(--line); color: #334155; }
+
+    .prize-grid { display:grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .prize-item { border:1px solid var(--line); border-radius:18px; padding:16px; background:white; }
+    .prize-item small { color:var(--muted); }
+    .prize-item strong { display:block; color:var(--navy); font-size:23px; margin:4px 0; }
+    .prize-item span { color:var(--red); font-size:14px; }
+    .remark { border:1px solid rgba(139,30,36,.28); background:rgba(139,30,36,.08); color:var(--red); border-radius:18px; padding:18px; }
+    .remark strong { color: var(--red); font-size: 18px; }
+    .remark-list { margin: 12px 0 0; padding-left: 20px; color: var(--red); line-height: 1.8; }
+    .remark-cell { color: var(--red); font-weight: 700; }
+
+
+    .table-wrap { overflow:auto; max-height: 520px; border-radius: 18px; border: 1px solid var(--line); }
+    table { width:100%; border-collapse: collapse; min-width: 1040px; background:white; }
+    th, td { padding: 12px 14px; border-bottom: 1px solid #edf0f4; text-align: left; font-size: 13px; vertical-align: top; }
+    th { position: sticky; top:0; background: var(--navy); color:white; z-index:1; font-weight:600; }
+    td.money { color:var(--navy); font-weight:700; white-space:nowrap; }
+    .pill { display:inline-flex; padding:5px 10px; border-radius:999px; font-size:12px; font-weight:600; white-space:nowrap; }
+    .pill.active { background:rgba(11,31,58,.08); color:var(--navy); }
+    .pill.inactive { background:rgba(139,30,36,.08); color:var(--red); }
+    .pill.missing { background:#f1f5f9; color:#64748b; }
+    .footer-note { color: var(--muted); font-size: 12px; text-align:right; margin-top:10px; }
+
+    @media (max-width: 980px) {
+      .hero, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .page { padding: 18px 12px 36px; }
+      .hero-main, .hero-side { padding: 26px 20px; }
+      .stats, .prize-grid { grid-template-columns: 1fr; }
+      select, input { min-width: 100%; width: 100%; }
+      .filter-actions { width:100%; }
+      button { width:100%; }
+      .quick-actions { width:100%; }
+      .hero-money { font-size: 30px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="hero-main">
+        <div class="badge">🏆 Dashboard สรุปข้อมูลจากไฟล์ CSV</div>
+        <h1>สรุปการซื้อสลาก<br>งานประกาศเกียรติคุณ ปี 2568</h1>
+        <p>แดชบอร์ดสำหรับดูภาพรวมผู้ได้รับรางวัล เงินรางวัล สถานะสลาก และกรองข้อมูลตาม BU ได้ทันที โดยใช้ธีมพื้นขาว น้ำเงินเข้ม แดงเข้ม และฟอนต์ Prompt</p>
+      </div>
+      <div class="hero-side">
+        <div>
+          <div class="hero-label">ยอดรวมเงินรางวัล</div>
+          <div class="hero-money" id="heroMoney">-</div>
+        </div>
+        <div class="selected-box">
+          <span class="hero-label">BU ที่เลือก</span>
+          <strong id="selectedBuText">ทั้งหมด</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel filter-panel">
+      <div class="filter-title">
+        <div class="icon">🔎</div>
+        <div>
+          <h2>ตัวกรองข้อมูล</h2>
+          <p>เลือก BU หรือค้นหาชื่อ / รางวัล / สถานะ</p>
+        </div>
+      </div>
+      <div class="filter-actions">
+        <select id="buFilter"></select>
+        <input id="searchInput" type="search" placeholder="ค้นหา เช่น ชื่อ, รางวัล, ACTIVE" />
+        <button id="resetBtn">รีเซ็ต</button>
+      </div>
+      <div class="quick-actions">
+        <button class="quick-btn" data-view="all">ดูข้อมูลทั้งหมด</button>
+        <button class="quick-btn" data-view="withLottery">ดูผู้มีทะเบียนสลาก</button>
+        <button class="quick-btn red" data-view="withoutLottery">ดูผู้ต้องตรวจสอบ</button>
+        <button class="quick-btn red" data-view="inactive">ดู INACTIVE</button>
+        <button class="quick-btn red" data-view="remark">ดูรายการมีหมายเหตุ</button>
+      </div>
+    </section>
+
+    <section class="stats">
+      <div class="stat" data-view="all" title="คลิกเพื่อดูข้อมูลทั้งหมด"><div><small>จำนวนผู้ได้รับรางวัล</small><div class="value" id="totalPeople">-</div><div class="detail">คลิกเพื่อดูข้อมูลทั้งหมด</div></div><div class="stat-icon">👥</div></div>
+      <div class="stat red" data-view="all" title="คลิกเพื่อดูรายการเงินรางวัลทั้งหมด"><div><small>เงินรางวัลรวม</small><div class="value" id="totalPrize">-</div><div class="detail">ยอดรวมตามตัวกรองปัจจุบัน</div></div><div class="stat-icon">฿</div></div>
+      <div class="stat" data-view="withLottery" title="คลิกเพื่อดูผู้มีทะเบียนสลาก"><div><small>มีทะเบียนสลากแล้ว</small><div class="value" id="withLottery">-</div><div class="detail" id="lotteryPercent">-</div></div><div class="stat-icon">🎫</div></div>
+      <div class="stat red" data-view="withoutLottery" title="คลิกเพื่อดูรายการต้องตรวจสอบ"><div><small>ต้องตรวจสอบเพิ่มเติม</small><div class="value" id="withoutLottery">-</div><div class="detail">คลิกเพื่อดูรายการที่ยังไม่มีทะเบียน / สถานะ</div></div><div class="stat-icon">⚠️</div></div>
+    </section>
+
+    <section class="grid-3">
+      <div class="panel card">
+        <div class="card-head"><div><h2>จำนวนผู้ได้รับรางวัลตาม BU</h2><p class="sub">แสดงตามตัวกรองที่เลือก</p></div><span>🏢</span></div>
+        <div id="buBars"></div>
+      </div>
+      <div class="panel card">
+        <div class="card-head"><div><h2>สถานะบัญชี / สลาก</h2><p class="sub">จากรายการที่มีข้อมูลสถานะ</p></div><span>✅</span></div>
+        <div class="status-box status-active"><span>ACTIVE</span><strong id="activeCount">-</strong><small id="activePercent">-</small></div>
+        <div class="status-box status-inactive"><span>INACTIVE</span><strong id="inactiveCount">-</strong><small id="inactivePercent">-</small></div>
+        <div class="status-box status-missing"><span>ไม่มีข้อมูลสถานะ</span><strong id="missingStatus">-</strong><small id="missingPercent">-</small></div>
+      </div>
+    </section>
+
+    <section class="grid-2">
+      <div class="panel card">
+        <div class="card-head"><div><h2>ประเภทรางวัล</h2><p class="sub">จำนวนผู้ได้รับรางวัลแยกตามชื่อรางวัล</p></div><span>🏅</span></div>
+        <div id="awardBars"></div>
+      </div>
+      <div class="panel card">
+        <div class="card-head"><div><h2 style="color:var(--red);">หมายเหตุ</h2><p class="sub">รายการที่ต้องตรวจสอบเพิ่มเติม</p></div><span>⚠️</span></div>
+        <div class="remark">
+          <strong>หมายเหตุที่พบ</strong><br>
+          <span id="remarkText">-</span>
+          <ul class="remark-list" id="remarkList"></ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel card" id="detailSection">
+      <div class="card-head"><div><h2>ตารางรายละเอียด</h2><p class="sub" id="tableSub">-</p></div><span>📋</span></div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ลำดับ</th><th>BU</th><th>ชื่อ-นามสกุล</th><th>ตำแหน่ง</th><th>สังกัด</th><th>ชื่อรางวัล</th><th>ทะเบียนสลาก</th><th>สถานะ</th><th>เงินรางวัล</th><th>หมายเหตุ</th>
+            </tr>
+          </thead>
+          <tbody id="detailRows"></tbody>
+        </table>
+      </div>
+      <div class="footer-note">ข้อมูลฝังอยู่ในไฟล์ index.html นี้ สามารถเปิดใช้งานได้ทันทีโดยไม่ต้องต่อฐานข้อมูล</div>
+    </section>
+  </main>
+
+  <script>
+    const DATA = [{"no": 1, "code": "0167004", "bu": "บริษัท ไทยรุ่ง พาร์ทเนอร์ส กรุ๊ป จำกัด (TRP)", "name": "นางสาวเมทินี ทองเชื้อ", "position": "เจ้าหน้าที่บัญชี (ด้านจ่ายเจ้าหนี้)", "department": "ส่วนบัญชี-ด้านจ่ายเจ้าหนี้", "award": "ผลการปฏิบัติงานดีเยี่ยม", "lottery": "400080426572", "lotteryType": "สลากออมสินดิจิทัล", "account": "20382466512", "status": "INACTIVE", "statusRaw": "INACTIVE (ไม่มีการเข้าใช้งานมากกว่า 3 เดือน ให้ติดต่อสาขา)", "prize": 5000.0, "remark": ""}, {"no": 2, "code": "0467009", "bu": "บริษัท บิซ พีเค จำกัด (BPK)", "name": "นางสาวเพลินตา ติชากูล", "position": "ผู้จัดการส่วนขาย (SM)", "department": "ขาย PK ทีม 5", "award": "นักขายมือทอง", "lottery": "400132291552", "lotteryType": "สลากออมสินดิจิทัล", "account": "20462097245", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 5000.0, "remark": ""}, {"no": 3, "code": "1465004", "bu": "บริษัท วี.พี. แคปปิตอล แอสเซ็ทส์ จำกัด", "name": "นางสาวชิชญ์ฌาน์ เจริญวัย", "position": "เจ้าหน้าที่บัญชี", "department": "ฝ่ายบัญชีการเงิน", "award": "ผลการปฏิบัติงานดีเยี่ยม", "lottery": "", "lotteryType": "", "account": "", "status": "", "statusRaw": "", "prize": 5000.0, "remark": ""}, {"no": 4, "code": "0761080", "bu": "บริษัท บิซ มอเตอร์ส จำกัด (BMT)", "name": "นางสาวสุภาพร ภูพลผัน", "position": "ผู้อำนวยการสายงานขาย", "department": "ฝ่ายขาย ทีม 8", "award": "นักขายมือทอง", "lottery": "400121952826", "lotteryType": "สลากออมสินดิจิทัล", "account": "20441880315", "status": "INACTIVE", "statusRaw": "INACTIVE (ไม่มีการเข้าใช้งานมากกว่า 3 เดือน ให้ติดต่อสาขา)", "prize": 5000.0, "remark": ""}, {"no": 5, "code": "0760034", "bu": "บริษัท บิซ มอเตอร์ส จำกัด (BMT)", "name": "นายอัฐพล วราภิบาล", "position": "ที่ปรึกษาด้านบริการ(SA)(อาวุโส)", "department": "รับรถ", "award": "สุดยอดที่ปรึกษาด้านการบริการ", "lottery": "", "lotteryType": "", "account": "", "status": "", "statusRaw": "", "prize": 5000.0, "remark": "ตรวจสอบวันลาเกิน"}, {"no": 6, "code": "0765071", "bu": "บริษัท บิซ มอเตอร์ส จำกัด (BMT)", "name": "นายกิฟฟาลี บารอเฮ็ม", "position": "พนักงานช่าง", "department": "ซ่อม", "award": "ช่างยอดเยี่ยม", "lottery": "400121499885", "lotteryType": "สลากออมสินดิจิทัล", "account": "20440999173", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 5000.0, "remark": ""}, {"no": 7, "code": "0756026", "bu": "บริษัท บิซ มอเตอร์ส จำกัด (BMT)", "name": "นายสุรสิทธิ์ อาษาพัฒนวงษ์", "position": "เจ้าหน้าที่ลูกค้าสัมพันธ์(อาวุโส)", "department": "ลูกค้าสัมพันธ์", "award": "ผลการปฏิบัติงานดีเยี่ยม", "lottery": "400063825857", "lotteryType": "สลากออมสินดิจิทัล", "account": "20165819945", "status": "INACTIVE", "statusRaw": "INACTIVE (ไม่มีการเข้าใช้งานมากกว่า 3 เดือน ให้ติดต่อสาขา)", "prize": 5000.0, "remark": "ตรวจสอบวันลาเกิน"}, {"no": 8, "code": "0765029", "bu": "บริษัท บิซ มอเตอร์ส จำกัด (BMT)", "name": "นางสาวรัชดาพร โพดรัมย์", "position": "เจ้าหน้าที่การเงิน", "department": "บัญชีและการเงิน", "award": "ผลการปฏิบัติงานดีเยี่ยม", "lottery": "400121454302", "lotteryType": "สลากออมสินดิจิทัล", "account": "20440911939", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 5000.0, "remark": ""}, {"no": 9, "code": "1950003", "bu": "บริษัท โตโยต้า ลิบรา จำกัด", "name": "นายเกษม ทวีปรีชาชาติ", "position": "ที่ปรึกษาการขาย(อาวุโส)", "department": "ขายลูกค้ารายใหญ่", "award": "นักขายมือทอง", "lottery": "400048077004", "lotteryType": "สลากออมสินดิจิทัล", "account": "20213810151", "status": "INACTIVE", "statusRaw": "INACTIVE (ไม่มีการเข้าใช้งานมากกว่า 3 เดือน ให้ติดต่อสาขา)", "prize": 5000.0, "remark": ""}, {"no": 10, "code": "1962002", "bu": "บริษัท โตโยต้า ลิบรา จำกัด", "name": "นางสาวภัทรวรรณ กิตติพลังชัย", "position": "ที่ปรึกษาด้านบริการ(SA)(อาวุโส)", "department": "ต้อนรับ (งานซ่อมสีและตัวถัง)", "award": "สุดยอดที่ปรึกษาด้านการบริการ", "lottery": "", "lotteryType": "", "account": "", "status": "", "statusRaw": "", "prize": 5000.0, "remark": ""}, {"no": 11, "code": "1966008", "bu": "บริษัท โตโยต้า ลิบรา จำกัด", "name": "นายจีรภัทร์ ฤทธิ์ศรี", "position": "พนักงานช่าง", "department": "บริการซ่อมสีและตัวถัง", "award": "ช่างยอดเยี่ยม", "lottery": "", "lotteryType": "", "account": "", "status": "", "statusRaw": "", "prize": 5000.0, "remark": ""}, {"no": 12, "code": "1955004", "bu": "บริษัท โตโยต้า ลิบรา จำกัด", "name": "นางสาวนิลวรรณ พลแหลม", "position": "เจ้าหน้าที่ลูกค้าสัมพันธ์(อาวุโส)", "department": "Call Center และลูกค้าสัมพันธ์", "award": "ผลการปฏิบัติงานดีเยี่ยม", "lottery": "400073790034", "lotteryType": "สลากออมสินดิจิทัล", "account": "20374544854", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 5000.0, "remark": ""}, {"no": 13, "code": "0864012", "bu": "บริษัท เลกซัส ออโต้ ซิตี้ จำกัด  (LAC)", "name": "นายวีระชิต รัตนผาสุก", "position": "ผู้จัดการทีมขาย (STM)", "department": "ขายทีม A", "award": "นักขายมือทอง", "lottery": "400128430446", "lotteryType": "สลากออมสินดิจิทัล", "account": "20455771889", "status": "INACTIVE", "statusRaw": "INACTIVE (ไม่มีการเข้าใช้งานมากกว่า 3 เดือน ให้ติดต่อสาขา)", "prize": 5000.0, "remark": ""}, {"no": 14, "code": "0857016", "bu": "บริษัท เลกซัส ออโต้ ซิตี้ จำกัด  (LAC)", "name": "นายเจริญชัย ขาวอ่อน", "position": "ที่ปรึกษาด้านบริการ(SA)", "department": "ต้อนรับ (BP)", "award": "สุดยอดที่ปรึกษาด้านการบริการ", "lottery": "400132333586", "lotteryType": "สลากออมสินดิจิทัล", "account": "20307995066", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 5000.0, "remark": ""}, {"no": 15, "code": "0862011", "bu": "บริษัท เลกซัส ออโต้ ซิตี้ จำกัด  (LAC)", "name": "นายจิระเดช ลิมกุลาคมน์", "position": "ที่ปรึกษาด้านบริการ(SA)", "department": "ต้อนรับ (BP)", "award": "สุดยอดที่ปรึกษาด้านการบริการ", "lottery": "400063822680", "lotteryType": "สลากออมสินดิจิทัล", "account": "20044398947", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 5000.0, "remark": ""}, {"no": 16, "code": "0866023", "bu": "บริษัท เลกซัส ออโต้ ซิตี้ จำกัด  (LAC)", "name": "นายปัณณวิช เผือกสีอ่อน", "position": "พนักงานช่าง", "department": "ซ่อม", "award": "ช่างยอดเยี่ยม", "lottery": "", "lotteryType": "", "account": "", "status": "", "statusRaw": "", "prize": 5000.0, "remark": ""}, {"no": 17, "code": "0857022", "bu": "บริษัท เลกซัส ออโต้ ซิตี้ จำกัด  (LAC)", "name": "นายวิรชาติ คงสติ", "position": "ที่ปรึกษาด้านเทคนิคอาวุโส", "department": "ซ่อม", "award": "ผลการปฏิบัติงานดีเยี่ยม", "lottery": "400063795761", "lotteryType": "สลากออมสินดิจิทัล", "account": "20360505950", "status": "INACTIVE", "statusRaw": "INACTIVE (ไม่มีการเข้าใช้งานมากกว่า 3 เดือน ให้ติดต่อสาขา)", "prize": 5000.0, "remark": ""}, {"no": 18, "code": "0568005", "bu": "บริษัท วี.พี. ออโต้ เอ็นเตอร์ไพรส์ จำกัด  (VPA)", "name": "นางสาวสุพรรณษา ภู่นา", "position": "ผู้จัดการทีมขาย (STM)", "department": "ขาย NK ทีม 9", "award": "นักขายมือทอง", "lottery": "400108550759", "lotteryType": "สลากออมสินดิจิทัล", "account": "20422862183", "status": "INACTIVE", "statusRaw": "INACTIVE (ไม่มีการเข้าใช้งานมากกว่า 3 เดือน ให้ติดต่อสาขา)", "prize": 5000.0, "remark": ""}, {"no": 19, "code": "0560165", "bu": "บริษัท วี.พี. ออโต้ เอ็นเตอร์ไพรส์ จำกัด  (VPA)", "name": "นายณัฐพล บุญจันตะ", "position": "พนักงานช่าง", "department": "ซ่อม", "award": "ช่างยอดเยี่ยม", "lottery": "400102571264", "lotteryType": "สลากออมสินดิจิทัล", "account": "20413091511", "status": "INACTIVE", "statusRaw": "INACTIVE (ไม่มีการเข้าใช้งานมากกว่า 3 เดือน ให้ติดต่อสาขา)", "prize": 5000.0, "remark": ""}, {"no": 20, "code": "0358045", "bu": "บริษัท อีซูซุชัยเจริญกิจมอเตอร์ส จำกัด (ICCK)", "name": "นายกำพล จรูญพรภักดี", "position": "ผู้จัดการทีมขาย (STM)", "department": "ขายทีม C", "award": "นักขายมือทอง", "lottery": "400043292475", "lotteryType": "สลากออมสินดิจิทัล", "account": "020484165681\n55500425750", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 5000.0, "remark": ""}, {"no": 21, "code": "0354039", "bu": "บริษัท อีซูซุชัยเจริญกิจมอเตอร์ส จำกัด (ICCK)", "name": "นายศุภเชษฐ์ แสนวิจิตร", "position": "ที่ปรึกษาการขาย (SC)", "department": "ขายรถใหญ่", "award": "นักขายมือทอง", "lottery": "400083952095", "lotteryType": "สลากออมสินดิจิทัล", "account": "020386680761", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 5000.0, "remark": ""}, {"no": 22, "code": "0366061", "bu": "บริษัท อีซูซุชัยเจริญกิจมอเตอร์ส จำกัด (ICCK)", "name": "นายสุรสิทธิ์ โตรื่น", "position": "ที่ปรึกษาด้านบริการ(SA)", "department": "รับรถ", "award": "สุดยอดที่ปรึกษาด้านการบริการ", "lottery": "", "lotteryType": "", "account": "", "status": "", "statusRaw": "", "prize": 5000.0, "remark": ""}, {"no": 23, "code": "0365063", "bu": "บริษัท อีซูซุชัยเจริญกิจมอเตอร์ส จำกัด (ICCK)", "name": "นางสาวศศิธร จันทสิทธิ์", "position": "ที่ปรึกษาด้านบริการ(SA)", "department": "ต้อนรับ (งานซ่อมสีและตัวถัง)", "award": "สุดยอดที่ปรึกษาด้านการบริการ", "lottery": "400132239064\n400132238967", "lotteryType": "สลากออมสินดิจิทัล", "account": "020462037423", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 5000.0, "remark": ""}, {"no": 24, "code": "0360015", "bu": "บริษัท อีซูซุชัยเจริญกิจมอเตอร์ส จำกัด (ICCK)", "name": "นายวริช วานิชพงษ์พันธ์", "position": "หัวหน้าทีมช่าง", "department": "ซ่อม", "award": "ช่างยอดเยี่ยม", "lottery": "400102935329", "lotteryType": "สลากออมสินดิจิทัล", "account": "020413867902\n20413867084", "status": "INACTIVE", "statusRaw": "INACTIVE (ไม่มีการเข้าใช้งานมากกว่า 3 เดือน ให้ติดต่อสาขา)", "prize": 5000.0, "remark": ""}, {"no": 25, "code": "0365040", "bu": "บริษัท อีซูซุชัยเจริญกิจมอเตอร์ส จำกัด (ICCK)", "name": "นายทยากร ศรีบุญรอด", "position": "พนักงานช่าง", "department": "ซ่อม", "award": "ช่างยอดเยี่ยม", "lottery": "400132273261", "lotteryType": "สลากออมสินดิจิทัล", "account": "020462077288\n20462077288", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 5000.0, "remark": ""}, {"no": 26, "code": "0357054", "bu": "บริษัท อีซูซุชัยเจริญกิจมอเตอร์ส จำกัด (ICCK)", "name": "นายอรชุน รอดสุธา", "position": "พนักงานช่าง", "department": "ซ่อมสีและตัวถัง", "award": "ช่างยอดเยี่ยม", "lottery": "400131978985", "lotteryType": "สลากออมสินดิจิทัล", "account": "20461622647", "status": "INACTIVE", "statusRaw": "INACTIVE (ไม่มีการเข้าใช้งานมากกว่า 3 เดือน ให้ติดต่อสาขา)", "prize": 5000.0, "remark": ""}, {"no": 27, "code": "0360031", "bu": "บริษัท อีซูซุชัยเจริญกิจมอเตอร์ส จำกัด (ICCK)", "name": "นางสาวจิราพร ชูวงษ์วาล", "position": "เจ้าหน้าที่ลูกค้าสัมพันธ์", "department": "การตลาดและลูกค้าสัมพันธ์", "award": "ผลการปฏิบัติงานดีเยี่ยม", "lottery": "400104481132", "lotteryType": "สลากออมสินดิจิทัล", "account": "20276669080", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 5000.0, "remark": ""}, {"no": 28, "code": "0365025", "bu": "บริษัท อีซูซุชัยเจริญกิจมอเตอร์ส จำกัด (ICCK)", "name": "นางสาวปริยากร สะสม", "position": "เจ้าหน้าที่แคชเชียร์", "department": "การเงิน", "award": "ผลการปฏิบัติงานดีเยี่ยม", "lottery": "", "lotteryType": "", "account": "", "status": "", "statusRaw": "", "prize": 5000.0, "remark": ""}, {"no": 29, "code": "0361027", "bu": "บริษัท อีซูซุชัยเจริญกิจมอเตอร์ส จำกัด (ICCK)", "name": "นายเด่นชัด กาเกตุ", "position": "ที่ปรึกษาด้านบริการ(SA)", "department": "รับรถ", "award": "สุดยอดที่ปรึกษาด้านการบริการ", "lottery": "400117130619", "lotteryType": "สลากออมสินดิจิทัล", "account": "020436005407\n20436005407", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 5000.0, "remark": ""}, {"no": 30, "code": "0364055", "bu": "บริษัท อีซูซุชัยเจริญกิจมอเตอร์ส จำกัด (ICCK)", "name": "นายเอกบุรุษ คำเรือง", "position": "พนักงานช่าง", "department": "ซ่อม", "award": "ช่างยอดเยี่ยม", "lottery": "400102802537\n400102802107", "lotteryType": "สลากออมสินดิจิทัล", "account": "02041377725\n20413577725", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 5000.0, "remark": ""}, {"no": 31, "code": "0364044", "bu": "บริษัท อีซูซุชัยเจริญกิจมอเตอร์ส จำกัด (ICCK)", "name": "นางสาวผกาวดี วงษ์หล้า", "position": "เจ้าหน้าที่ลูกค้าสัมพันธ์", "department": "ขายและการตลาด", "award": "ผลการปฏิบัติงานดีเยี่ยม", "lottery": "", "lotteryType": "", "account": "", "status": "", "statusRaw": "", "prize": 5000.0, "remark": ""}, {"no": 32, "code": "0360038", "bu": "บริษัท อีซูซุชัยเจริญกิจมอเตอร์ส จำกัด (ICCK)", "name": "นางสาวมยุรี พรหมประสิทธิ์", "position": "เจ้าหน้าที่แคชเชียร์", "department": "การเงิน", "award": "ผลการปฏิบัติงานดีเยี่ยม", "lottery": "400063805750", "lotteryType": "สลากออมสินดิจิทัล", "account": "20342417480", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 5000.0, "remark": ""}, {"no": 33, "code": "0259030", "bu": "บริษัท ไทย วี.พี. คอร์ปอเรชั่น จำกัด (TVP)", "name": "นายศิวะนนท์ กองมูล", "position": "หัวหน้าทีมขายโครงการรถเช่า", "department": "ขายทีม E", "award": "นักขายมือทอง", "lottery": "400063819579", "lotteryType": "สลากออมสินดิจิทัล", "account": "20360551590", "status": "INACTIVE", "statusRaw": "INACTIVE (ไม่มีการเข้าใช้งานมากกว่า 3 เดือน ให้ติดต่อสาขา)", "prize": 5000.0, "remark": ""}, {"no": 34, "code": "0262075", "bu": "บริษัท ไทย วี.พี. คอร์ปอเรชั่น จำกัด (TVP)", "name": "นางสาวเปมิกา กฤตยาพันธุ์", "position": "ที่ปรึกษาการขายโครงการรถเช่า (อาวุโส)", "department": "ขายทีม I", "award": "นักขายมือทอง", "lottery": "400132858582", "lotteryType": "สลากออมสินดิจิทัล", "account": "20462978188", "status": "INACTIVE", "statusRaw": "INACTIVE (ไม่มีการเข้าใช้งานมากกว่า 3 เดือน ให้ติดต่อสาขา)", "prize": 5000.0, "remark": ""}, {"no": 35, "code": "0267066", "bu": "บริษัท ไทย วี.พี. คอร์ปอเรชั่น จำกัด (TVP)", "name": "นายกฤษฎา แก้วมุลตรี", "position": "ที่ปรึกษาการขาย (SC)", "department": "ขายรถยนต์มือสอง-ทีม2", "award": "นักขายมือทอง", "lottery": "400096778446", "lotteryType": "สลากออมสินดิจิทัล", "account": "20404266932", "status": "INACTIVE", "statusRaw": "INACTIVE (ไม่มีการเข้าใช้งานมากกว่า 3 เดือน ให้ติดต่อสาขา)", "prize": 5000.0, "remark": ""}, {"no": 36, "code": "0265066", "bu": "บริษัท ไทย วี.พี. คอร์ปอเรชั่น จำกัด (TVP)", "name": "นางพัชรา ชัยปลัด", "position": "เจ้าหน้าที่การเงิน (ด้านสินเชื่อ)", "department": "ส่วนงานการเงิน", "award": "ผลการปฏิบัติงานดีเยี่ยม", "lottery": "", "lotteryType": "", "account": "", "status": "", "statusRaw": "", "prize": 5000.0, "remark": "ตรวจสอบวันลาเกิน"}, {"no": 37, "code": "0258047", "bu": "บริษัท ไทย วี.พี. คอร์ปอเรชั่น จำกัด (TVP)", "name": "นางสาวสาริศา พรายระหาญ", "position": "ผู้ช่วยผู้จัดการส่วนควบคุมยานพาหนะ", "department": "ส่วน Vehicle Control", "award": "ผลการปฏิบัติงานดีเยี่ยม", "lottery": "400063861886", "lotteryType": "สลากออมสินดิจิทัล", "account": "20360621997", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 5000.0, "remark": ""}, {"no": 38, "code": "0265027", "bu": "บริษัท ไทย วี.พี. คอร์ปอเรชั่น จำกัด (TVP)", "name": "นายนาวี แก้วจีน", "position": "เจ้าหน้าที่วิเคราะห์งานซ่อม", "department": "ฝ่ายซ่อมบำรุง", "award": "ผลการปฏิบัติงานดีเยี่ยม", "lottery": "", "lotteryType": "", "account": "", "status": "", "statusRaw": "", "prize": 5000.0, "remark": ""}, {"no": 39, "code": "0463003", "bu": "บริษัท บิซ พีเค จำกัด (BPK)", "name": "นางมุกดา เกื้อหนุน", "position": "เจ้าหน้าที่ลูกค้าสัมพันธ์ (ฝ่ายขาย)", "department": "ลูกค้าสัมพันธ์", "award": "พนักงานอายุงาน 5 ปี", "lottery": "400074150162", "lotteryType": "สลากออมสินดิจิทัล", "account": "20374991709", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 5000.0, "remark": ""}, {"no": 40, "code": "0463096", "bu": "บริษัท บิซ พีเค จำกัด (BPK)", "name": "นายพงศธร รัชกรทอง", "position": "พนักงานงาน PDI", "department": "ธุรการขาย", "award": "พนักงานอายุงาน 5 ปี", "lottery": "400132285737", "lotteryType": "สลากออมสินดิจิทัล", "account": "20462090356", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 5000.0, "remark": ""}, {"no": 41, "code": "0463135", "bu": "บริษัท บิซ พีเค จำกัด (BPK)", "name": "นายยศพัฒน์ ติชากูล", "position": "ผู้จัดการส่วนขาย (SM)", "department": "ขาย PK ทีม 5", "award": "พนักงานอายุงาน 5 ปี", "lottery": "400132291941", "lotteryType": "สลากออมสินดิจิทัล", "account": "20462097898", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 5000.0, "remark": ""}, {"no": 42, "code": "0463136", "bu": "บริษัท บิซ พีเค จำกัด (BPK)", "name": "นายอนุวัฒน์ โททำ", "position": "ที่ปรึกษาการขาย (SC)", "department": "ขาย PK ทีม 5", "award": "พนักงานอายุงาน 5 ปี", "lottery": "", "lotteryType": "", "account": "", "status": "", "statusRaw": "", "prize": 5000.0, "remark": ""}, {"no": 43, "code": "0463002", "bu": "บริษัท บิซ พีเค จำกัด (BPK)", "name": "นายสุรศักดิ์ ทับนิล", "position": "ผู้จัดการฝ่ายศูนย์บริการและอะไหล่", "department": "ต้อนรับ", "award": "พนักงานอายุงาน 5 ปี", "lottery": "", "lotteryType": "", "account": "", "status": "", "statusRaw": "", "prize": 5000.0, "remark": ""}, {"no": 44, "code": "0463030", "bu": "บริษัท บิซ พีเค จำกัด (BPK)", "name": "นายวุฒิพงศ์ รักศิลป์", "position": "ที่ปรึกษาด้านบริการ(SA)", "department": "ต้อนรับ", "award": "พนักงานอายุงาน 5 ปี", "lottery": "", "lotteryType": "", "account": "", "status": "", "statusRaw": "", "prize": 5000.0, "remark": ""}, {"no": 45, "code": "0463130", "bu": "บริษัท บิซ พีเค จำกัด (BPK)", "name": "นายธนธรณ์ สาระศาลิน", "position": "พนักงานช่าง", "department": "ซ่อม", "award": "พนักงานอายุงาน 5 ปี", "lottery": "", "lotteryType": "", "account": "", "status": "", "statusRaw": "", "prize": 5000.0, "remark": ""}, {"no": 46, "code": "0463004", "bu": "บริษัท บิซ พีเค จำกัด (BPK)", "name": "นายนนทพัฒน์ นาคมโน", "position": "เจ้าหน้าที่อะไหล่(อาวุโส)", "department": "อะไหล่", "award": "พนักงานอายุงาน 5 ปี", "lottery": "400083727554", "lotteryType": "สลากออมสินดิจิทัล", "account": "20386397861", "status": "INACTIVE", "statusRaw": "INACTIVE (ไม่มีการเข้าใช้งานมากกว่า 3 เดือน ให้ติดต่อสาขา)", "prize": 5000.0, "remark": ""}, {"no": 47, "code": "0163021", "bu": "บริษัท ไทยรุ่ง พาร์ทเนอร์ส กรุ๊ป จำกัด (TRP)", "name": "นางสาวศิรินารถ สุขกิจ", "position": "เจ้าหน้าที่ธุรการ", "department": "สำนักบริหาร", "award": "พนักงานอายุงาน 5 ปี", "lottery": "", "lotteryType": "", "account": "", "status": "", "statusRaw": "", "prize": 5000.0, "remark": ""}, {"no": 48, "code": "0163004", "bu": "บริษัท ไทยรุ่ง พาร์ทเนอร์ส กรุ๊ป จำกัด (TRP)", "name": "นางสาวจินทภา ศรพรหม", "position": "เจ้าหน้าที่บัญชี (ด้านจ่ายเจ้าหนี้)", "department": "ส่วนบัญชี-ด้านจ่ายเจ้าหนี้", "award": "พนักงานอายุงาน 5 ปี", "lottery": "", "lotteryType": "", "account": "", "status": "", "statusRaw": "", "prize": 5000.0, "remark": ""}, {"no": 49, "code": "0163003", "bu": "บริษัท ไทยรุ่ง พาร์ทเนอร์ส กรุ๊ป จำกัด (TRP)", "name": "นางสาวกมลชนก วารีอุดม", "position": "เจ้าหน้าที่บัญชี (ด้านลูกหนี้)", "department": "ส่วนบัญชี-ด้านบัญชีลูกหนี้", "award": "พนักงานอายุงาน 5 ปี", "lottery": "400132829476", "lotteryType": "สลากออมสินดิจิทัล", "account": "20296719147", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 5000.0, "remark": ""}, {"no": 50, "code": "0763153", "bu": "บริษัท บิซ มอเตอร์ส จำกัด (BMT)", "name": "นางสาววันวิสา เต๊ะปานัน", "position": "ผู้จัดการส่วนขาย (SM)", "department": "ฝ่ายขาย ทีม 5", "award": "พนักงานอายุงาน 5 ปี", "lottery": "400063834354", "lotteryType": "สลากออมสินดิจิทัล", "account": "20259267480", "status": "INACTIVE", "statusRaw": "INACTIVE (ไม่มีการเข้าใช้งานมากกว่า 3 เดือน ให้ติดต่อสาขา)", "prize": 5000.0, "remark": ""}, {"no": 51, "code": "0763090", "bu": "บริษัท บิซ มอเตอร์ส จำกัด (BMT)", "name": "นายชัยโรจน์ ฤทธิ์ทา", "position": "พนักงานช่าง", "department": "ซ่อม", "award": "พนักงานอายุงาน 5 ปี", "lottery": "", "lotteryType": "", "account": "", "status": "", "statusRaw": "", "prize": 5000.0, "remark": ""}, {"no": 52, "code": "0763098", "bu": "บริษัท บิซ มอเตอร์ส จำกัด (BMT)", "name": "นายณัตพณ อิสลามชาติไทย", "position": "พนักงานช่าง", "department": "ซ่อม", "award": "พนักงานอายุงาน 5 ปี", "lottery": "400132197445", "lotteryType": "สลากออมสินดิจิทัล", "account": "20297315994", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 5000.0, "remark": ""}, {"no": 53, "code": "0263026", "bu": "บริษัท ไทย วี.พี. คอร์ปอเรชั่น จำกัด (TVP)", "name": "นางสาวชฎาพร สีสุทร", "position": "ที่ปรึกษาการขายโครงการรถเช่า", "department": "ขายทีม F", "award": "พนักงานอายุงาน 5 ปี", "lottery": "400100219288", "lotteryType": "สลากออมสินดิจิทัล", "account": "20409191861", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 5000.0, "remark": ""}, {"no": 54, "code": "0263018", "bu": "บริษัท ไทย วี.พี. คอร์ปอเรชั่น จำกัด (TVP)", "name": "นางสาวสุพรรณี เขตต์ประดิษฐ", "position": "ที่ปรึกษาการขายโครงการรถเช่า", "department": "ขายทีม H", "award": "พนักงานอายุงาน 5 ปี", "lottery": "400102711365", "lotteryType": "สลากออมสินดิจิทัล", "account": "20413381763", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 5000.0, "remark": ""}, {"no": 55, "code": "0263033", "bu": "บริษัท ไทย วี.พี. คอร์ปอเรชั่น จำกัด (TVP)", "name": "นางสาวแสงนภา เพชรเถื่อน", "position": "Senior Call Center", "department": "คอลเซ็นเตอร์ (Call Center)", "award": "พนักงานอายุงาน 5 ปี", "lottery": "", "lotteryType": "", "account": "", "status": "", "statusRaw": "", "prize": 5000.0, "remark": ""}, {"no": 56, "code": "0263032", "bu": "บริษัท ไทย วี.พี. คอร์ปอเรชั่น จำกัด (TVP)", "name": "นางสาววรารัตน์ ถุงสมบัติ", "position": "เจ้าหน้าที่คำนวณราคา", "department": "ส่วนคำนวณราคา", "award": "พนักงานอายุงาน 5 ปี", "lottery": "", "lotteryType": "", "account": "", "status": "", "statusRaw": "", "prize": 5000.0, "remark": ""}, {"no": 57, "code": "0263034", "bu": "บริษัท ไทย วี.พี. คอร์ปอเรชั่น จำกัด (TVP)", "name": "นายธีศิษฎ์ ทองเหมือน", "position": "ผู้ช่วยผู้จัดการส่วนงานประกันภัย", "department": "ฝ่ายประกันภัยรถยนต์", "award": "พนักงานอายุงาน 5 ปี", "lottery": "", "lotteryType": "", "account": "", "status": "", "statusRaw": "", "prize": 5000.0, "remark": ""}, {"no": 58, "code": "0263024", "bu": "บริษัท ไทย วี.พี. คอร์ปอเรชั่น จำกัด (TVP)", "name": "ว่าที่ร้อยตรีธฤษณุ ฐิติสถาวร", "position": "เจ้าหน้าที่งานเคลมและอุบัติเหตุ", "department": "ฝ่ายประกันภัยรถยนต์", "award": "พนักงานอายุงาน 5 ปี", "lottery": "400087994424", "lotteryType": "สลากออมสินดิจิทัล", "account": "20392259659", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 5000.0, "remark": ""}, {"no": 59, "code": "0263046", "bu": "บริษัท ไทย วี.พี. คอร์ปอเรชั่น จำกัด (TVP)", "name": "นายยุทธพงษ์ สายสุด", "position": "พนักงานงาน PDI(อาวุโส)", "department": "ฝ่ายซ่อมบำรุง", "award": "พนักงานอายุงาน 5 ปี", "lottery": "", "lotteryType": "", "account": "", "status": "", "statusRaw": "", "prize": 5000.0, "remark": ""}, {"no": 60, "code": "0263005", "bu": "บริษัท ไทย วี.พี. คอร์ปอเรชั่น จำกัด (TVP)", "name": "นางสาวธิษตยา มูลมงคล", "position": "ผู้จัดการฝ่ายบริหารสาขา", "department": "ขายบุคคลระยะสั้น สาทร", "award": "พนักงานอายุงาน 5 ปี", "lottery": "400065315048", "lotteryType": "สลากออมสินดิจิทัล", "account": "20362643478", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 5000.0, "remark": ""}, {"no": 61, "code": "0263004", "bu": "บริษัท ไทย วี.พี. คอร์ปอเรชั่น จำกัด (TVP)", "name": "นางสาวมณีวรรณ ภาโนมัย", "position": "ผู้ช่วยผู้จัดการส่วนวิเคราะห์และวางแผนกลยุทธ์", "department": "ฝ่ายขายอีซี่คาร์ (ทีม 1)", "award": "พนักงานอายุงาน 5 ปี", "lottery": "", "lotteryType": "", "account": "", "status": "", "statusRaw": "", "prize": 5000.0, "remark": ""}, {"no": 62, "code": "0263039", "bu": "บริษัท ไทย วี.พี. คอร์ปอเรชั่น จำกัด (TVP)", "name": "นางสาวสุลีพร ภาคแก้ว", "position": "เจ้าหน้าที่ธุรการ", "department": "ฝ่ายขายอีซี่คาร์ (Flexi ระยะสั้น)", "award": "พนักงานอายุงาน 5 ปี", "lottery": "", "lotteryType": "", "account": "", "status": "", "statusRaw": "", "prize": 5000.0, "remark": ""}, {"no": 63, "code": "0263013", "bu": "บริษัท ไทย วี.พี. คอร์ปอเรชั่น จำกัด (TVP)", "name": "นายกิตติ รักษ์ศรีทอง", "position": "Vehical Service Agent(VSA)", "department": "ขายบุคคลระยะสั้น สาขาภูเก็ต", "award": "พนักงานอายุงาน 5 ปี", "lottery": "400111291813", "lotteryType": "สลากออมสินดิจิทัล", "account": "20427167018", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 5000.0, "remark": ""}, {"no": 64, "code": "0263055", "bu": "บริษัท ไทย วี.พี. คอร์ปอเรชั่น จำกัด (TVP)", "name": "นายกฤตธัช มุตตารักษ์", "position": "Rental Service Officer", "department": "ขายบุคคลระยะสั้น สาขาภูเก็ต", "award": "พนักงานอายุงาน 5 ปี", "lottery": "", "lotteryType": "", "account": "", "status": "", "statusRaw": "", "prize": 5000.0, "remark": ""}, {"no": 65, "code": "0263010", "bu": "บริษัท ไทย วี.พี. คอร์ปอเรชั่น จำกัด (TVP)", "name": "นายกำแพง เพ็งยอด", "position": "Rental Service Officer", "department": "ขายบุคคลระยะสั้น สาขาดอนเมือง", "award": "พนักงานอายุงาน 5 ปี", "lottery": "", "lotteryType": "", "account": "", "status": "", "statusRaw": "", "prize": 5000.0, "remark": ""}, {"no": 66, "code": "0363068", "bu": "บริษัท อีซูซุชัยเจริญกิจมอเตอร์ส จำกัด (ICCK)", "name": "นายทรงพล ดีวัน", "position": "พนักงานช่าง", "department": "ซ่อมสีและตัวถัง", "award": "พนักงานอายุงาน 5 ปี", "lottery": "400125034282", "lotteryType": "สลากออมสินดิจิทัล", "account": "20449487477", "status": "INACTIVE", "statusRaw": "INACTIVE (ไม่มีการเข้าใช้งานมากกว่า 3 เดือน ให้ติดต่อสาขา)", "prize": 5000.0, "remark": ""}, {"no": 67, "code": "0363002", "bu": "บริษัท อีซูซุชัยเจริญกิจมอเตอร์ส จำกัด (ICCK)", "name": "นางสาวอาภาศิริ สุพรรณโมก", "position": "ที่ปรึกษาการขาย (SC)", "department": "ขายรถใหญ่", "award": "พนักงานอายุงาน 5 ปี", "lottery": "400064284781", "lotteryType": "สลากออมสินดิจิทัล", "account": "020339279968\n20339279968", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 5000.0, "remark": ""}, {"no": 68, "code": "0363019", "bu": "บริษัท อีซูซุชัยเจริญกิจมอเตอร์ส จำกัด (ICCK)", "name": "นายสำราญ โม้จันทร์", "position": "ผู้จัดการส่วนขาย (SM)", "department": "ขายรถใหญ่", "award": "พนักงานอายุงาน 5 ปี", "lottery": "", "lotteryType": "", "account": "", "status": "", "statusRaw": "", "prize": 5000.0, "remark": ""}, {"no": 69, "code": "0363062", "bu": "บริษัท อีซูซุชัยเจริญกิจมอเตอร์ส จำกัด (ICCK)", "name": "นางสาวรัชนก นาตาแสง", "position": "ที่ปรึกษาด้านบริการ(SA)", "department": "รับรถ", "award": "พนักงานอายุงาน 5 ปี", "lottery": "", "lotteryType": "", "account": "", "status": "", "statusRaw": "", "prize": 5000.0, "remark": ""}, {"no": 70, "code": "0863008", "bu": "บริษัท เลกซัส ออโต้ ซิตี้ จำกัด  (LAC)", "name": "นางสาววาสนา สว่างศรี", "position": "ที่ปรึกษาการขาย (SC)", "department": "ขายทีม O", "award": "พนักงานอายุงาน 5 ปี", "lottery": "", "lotteryType": "", "account": "", "status": "", "statusRaw": "", "prize": 5000.0, "remark": ""}, {"no": 71, "code": "0863006", "bu": "บริษัท เลกซัส ออโต้ ซิตี้ จำกัด  (LAC)", "name": "นายวิรุฬ ประทุมศรี", "position": "พนักงานช่าง", "department": "ซ่อม", "award": "พนักงานอายุงาน 5 ปี", "lottery": "", "lotteryType": "", "account": "", "status": "", "statusRaw": "", "prize": 5000.0, "remark": ""}, {"no": 72, "code": "0863007", "bu": "บริษัท เลกซัส ออโต้ ซิตี้ จำกัด  (LAC)", "name": "นายวนิรันดร์ หาญกล้า", "position": "พนักงานช่าง", "department": "ซ่อม", "award": "พนักงานอายุงาน 5 ปี", "lottery": "", "lotteryType": "", "account": "", "status": "", "statusRaw": "", "prize": 5000.0, "remark": ""}, {"no": 73, "code": "0458009", "bu": "บริษัท บิซ พีเค จำกัด (BPK)", "name": "นายวศิน สุขใจดี", "position": "ที่ปรึกษาด้านบริการ(SA)(อาวุโส)", "department": "ต้อนรับ", "award": "พนักงานอายุงาน 10 ปี", "lottery": "400063834420", "lotteryType": "สลากออมสินดิจิทัล", "account": "20360573743", "status": "INACTIVE", "statusRaw": "INACTIVE (ไม่มีการเข้าใช้งานมากกว่า 3 เดือน ให้ติดต่อสาขา)", "prize": 10000.0, "remark": ""}, {"no": 74, "code": "0458008", "bu": "บริษัท บิซ พีเค จำกัด (BPK)", "name": "นายณัฐพล พลนำ", "position": "ที่ปรึกษาด้านบริการ(SA)", "department": "ต้อนรับ", "award": "พนักงานอายุงาน 10 ปี", "lottery": "400063834388", "lotteryType": "สลากออมสินดิจิทัล", "account": "20360573685", "status": "INACTIVE", "statusRaw": "INACTIVE (ไม่มีการเข้าใช้งานมากกว่า 3 เดือน ให้ติดต่อสาขา)", "prize": 10000.0, "remark": ""}, {"no": 75, "code": "1458012", "bu": "บริษัท วี.พี. แคปปิตอล แอสเซ็ทส์ จำกัด", "name": "นางสาวนภัสวรรณ แสงเพชร", "position": "ผู้ช่วยผู้จัดการส่วนการเงิน", "department": "สำนักบริหาร", "award": "พนักงานอายุงาน 10 ปี", "lottery": "", "lotteryType": "", "account": "", "status": "", "statusRaw": "", "prize": 10000.0, "remark": ""}, {"no": 76, "code": "0758025", "bu": "บริษัท บิซ มอเตอร์ส จำกัด (BMT)", "name": "นางสาวพิศมัย สาระศรี", "position": "ผู้จัดการส่วนลูกค้าสัมพันธ์", "department": "ลูกค้าสัมพันธ์", "award": "พนักงานอายุงาน 10 ปี", "lottery": "400063825915", "lotteryType": "สลากออมสินดิจิทัล", "account": "20360561946", "status": "INACTIVE", "statusRaw": "INACTIVE (ไม่มีการเข้าใช้งานมากกว่า 3 เดือน ให้ติดต่อสาขา)", "prize": 10000.0, "remark": ""}, {"no": 77, "code": "0758047", "bu": "บริษัท บิซ มอเตอร์ส จำกัด (BMT)", "name": "นายณัฐวี ชัยสกุล", "position": "หัวหน้าทีมช่าง", "department": "ซ่อม", "award": "พนักงานอายุงาน 10 ปี", "lottery": "400063811311", "lotteryType": "สลากออมสินดิจิทัล", "account": "20130743865", "status": "INACTIVE", "statusRaw": "INACTIVE (ไม่มีการเข้าใช้งานมากกว่า 3 เดือน ให้ติดต่อสาขา)", "prize": 10000.0, "remark": ""}, {"no": 78, "code": "0758033", "bu": "บริษัท บิซ มอเตอร์ส จำกัด (BMT)", "name": "นางสาวมาริสา ประสงค์ทรัพย์", "position": "ผู้จัดการส่วนการเงิน", "department": "บัญชีและการเงิน", "award": "พนักงานอายุงาน 10 ปี", "lottery": "400063826079", "lotteryType": "สลากออมสินดิจิทัล", "account": "20277032056", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 10000.0, "remark": ""}, {"no": 79, "code": "0258071", "bu": "บริษัท ไทย วี.พี. คอร์ปอเรชั่น จำกัด (TVP)", "name": "นางสาวพิชญา สุวรรณวาสนา", "position": "ผู้จัดการส่วนขายโครงการรถเช่า", "department": "ขายทีม B", "award": "พนักงานอายุงาน 10 ปี", "lottery": "400063862090", "lotteryType": "สลากออมสินดิจิทัล", "account": "20360622375", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 10000.0, "remark": ""}, {"no": 80, "code": "0258034", "bu": "บริษัท ไทย วี.พี. คอร์ปอเรชั่น จำกัด (TVP)", "name": "นายภุชงค์ เขตจัตุรัส", "position": "หัวหน้าทีมขายโครงการรถเช่า", "department": "ขายทีม C", "award": "พนักงานอายุงาน 10 ปี", "lottery": "400052721299", "lotteryType": "สลากออมสินดิจิทัล", "account": "20307982817", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 10000.0, "remark": ""}, {"no": 81, "code": "0258062", "bu": "บริษัท ไทย วี.พี. คอร์ปอเรชั่น จำกัด (TVP)", "name": "นางเมทินี บุญแก้ว", "position": "ผู้อำนวยการบริหารต้นทุน(อาวุโส)", "department": "ส่วนจัดซื้อ จัดจ้าง", "award": "พนักงานอายุงาน 10 ปี", "lottery": "400063861993", "lotteryType": "สลากออมสินดิจิทัล", "account": "20043333010", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 10000.0, "remark": ""}, {"no": 82, "code": "0258047", "bu": "บริษัท ไทย วี.พี. คอร์ปอเรชั่น จำกัด (TVP)", "name": "นางสาวสาริศา พรายระหาญ", "position": "ผู้ช่วยผู้จัดการส่วนควบคุมยานพาหนะ", "department": "ส่วน Vehicle Control", "award": "พนักงานอายุงาน 10 ปี", "lottery": "400063861886", "lotteryType": "สลากออมสินดิจิทัล", "account": "20360621997", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 10000.0, "remark": ""}, {"no": 83, "code": "0258076", "bu": "บริษัท ไทย วี.พี. คอร์ปอเรชั่น จำกัด (TVP)", "name": "นายศราวุธ กล่ำศรี", "position": "Vehical Service Agent(VSA)", "department": "ขายบุคคลระยะสั้น สาขาหัวหิน", "award": "พนักงานอายุงาน 10 ปี", "lottery": "400084025792", "lotteryType": "สลากออมสินดิจิทัล", "account": "20386777575", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 10000.0, "remark": ""}, {"no": 84, "code": "0258077", "bu": "บริษัท ไทย วี.พี. คอร์ปอเรชั่น จำกัด (TVP)", "name": "นางสาวอมรรัตน์ ชุ่มคำ", "position": "ผู้ช่วยผู้จัดการส่วนบัญชี", "department": "ส่วนงานบัญชี", "award": "พนักงานอายุงาน 10 ปี", "lottery": "400063843579", "lotteryType": "สลากออมสินดิจิทัล", "account": "20169324942", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 10000.0, "remark": ""}, {"no": 85, "code": "0358045", "bu": "บริษัท อีซูซุชัยเจริญกิจมอเตอร์ส จำกัด (ICCK)", "name": "นายกำพล จรูญพรภักดี", "position": "ผู้จัดการทีมขาย (STM)", "department": "ขายทีม C", "award": "พนักงานอายุงาน 10 ปี", "lottery": "400043292475", "lotteryType": "สลากออมสินดิจิทัล", "account": "020484165681\n55500425750", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 10000.0, "remark": ""}, {"no": 86, "code": "0358022", "bu": "บริษัท อีซูซุชัยเจริญกิจมอเตอร์ส จำกัด (ICCK)", "name": "นายนพดล กันธิดา", "position": "ผู้ช่วยผู้จัดการส่วนบริการ", "department": "รับรถ", "award": "พนักงานอายุงาน 10 ปี", "lottery": "400063856761", "lotteryType": "สลากออมสินดิจิทัล", "account": "020238551145\n20238551145", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 10000.0, "remark": ""}, {"no": 87, "code": "0358058", "bu": "บริษัท อีซูซุชัยเจริญกิจมอเตอร์ส จำกัด (ICCK)", "name": "นายอุดมทรัพย์ วชิรโภคา", "position": "หัวหน้าทีมช่าง", "department": "หัวหน้าทีม(งานซ่อม)", "award": "พนักงานอายุงาน 10 ปี", "lottery": "400063856472", "lotteryType": "สลากออมสินดิจิทัล", "account": "20277191886", "status": "INACTIVE", "statusRaw": "INACTIVE (ไม่มีการเข้าใช้งานมากกว่า 3 เดือน ให้ติดต่อสาขา)", "prize": 10000.0, "remark": ""}, {"no": 88, "code": "0358062", "bu": "บริษัท อีซูซุชัยเจริญกิจมอเตอร์ส จำกัด (ICCK)", "name": "นางสาวมยุรา จงพูนทิพย์", "position": "ผู้จัดการส่วนการเงิน", "department": "การเงิน", "award": "พนักงานอายุงาน 10 ปี", "lottery": "400063855730", "lotteryType": "สลากออมสินดิจิทัล", "account": "20277068969", "status": "INACTIVE", "statusRaw": "INACTIVE (ไม่มีการเข้าใช้งานมากกว่า 3 เดือน ให้ติดต่อสาขา)", "prize": 10000.0, "remark": ""}, {"no": 89, "code": "0358017", "bu": "บริษัท อีซูซุชัยเจริญกิจมอเตอร์ส จำกัด (ICCK)", "name": "นายเฉลิมไชย คงไทย", "position": "ที่ปรึกษาด้านบริการ(SA)(อาวุโส)", "department": "ต้อนรับ (งานซ่อมสีและตัวถัง)", "award": "พนักงานอายุงาน 10 ปี", "lottery": "400063816419", "lotteryType": "สลากออมสินดิจิทัล", "account": "020360546129\n20360546129", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 10000.0, "remark": ""}, {"no": 90, "code": "0358044", "bu": "บริษัท อีซูซุชัยเจริญกิจมอเตอร์ส จำกัด (ICCK)", "name": "นายเอรวัฒน์ กองดี", "position": "ที่ปรึกษาการขาย (SC)", "department": "ขายรถใหญ่", "award": "พนักงานอายุงาน 10 ปี", "lottery": "400063856605", "lotteryType": "สลากออมสินดิจิทัล", "account": "020360613283\n20360613283", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 10000.0, "remark": ""}, {"no": 91, "code": "0358001", "bu": "บริษัท อีซูซุชัยเจริญกิจมอเตอร์ส จำกัด (ICCK)", "name": "นายศิริพงศ์ กิจแก้ว", "position": "ผู้จัดการส่วนขาย (SM)", "department": "ขายรถใหญ่", "award": "พนักงานอายุงาน 10 ปี", "lottery": "400063855441", "lotteryType": "สลากออมสินดิจิทัล", "account": "020018939288\n20018939288", "status": "INACTIVE", "statusRaw": "INACTIVE (ไม่มีการเข้าใช้งานมากกว่า 3 เดือน ให้ติดต่อสาขา)", "prize": 10000.0, "remark": ""}, {"no": 92, "code": "0858005", "bu": "บริษัท เลกซัส ออโต้ ซิตี้ จำกัด  (LAC)", "name": "นายบุญชิด ธานี", "position": "หัวหน้าทีมช่าง", "department": "ซ่อม", "award": "พนักงานอายุงาน 10 ปี", "lottery": "400063794954", "lotteryType": "สลากออมสินดิจิทัล", "account": "20360504375", "status": "INACTIVE", "statusRaw": "INACTIVE (ไม่มีการเข้าใช้งานมากกว่า 3 เดือน ให้ติดต่อสาขา)", "prize": 10000.0, "remark": ""}, {"no": 93, "code": "0453015", "bu": "บริษัท บิซ พีเค จำกัด (BPK)", "name": "นางสาวปริตา นันทะ", "position": "ผู้จัดการฝ่ายการเงิน", "department": "การเงิน", "award": "พนักงานอายุงาน 15 ปี", "lottery": "400063834321", "lotteryType": "สลากออมสินดิจิทัล", "account": "20165514520", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 15000.0, "remark": ""}, {"no": 94, "code": "1453002", "bu": "บริษัท วี.พี. แคปปิตอล แอสเซ็ทส์ จำกัด", "name": "นางสาวเกศรา เทพศร", "position": "หัวหน้าแผนกทรัพย์สิน", "department": "ฝ่ายบริหารอาคารและทรัพย์สิน", "award": "พนักงานอายุงาน 15 ปี", "lottery": "400063845160", "lotteryType": "สลากออมสินดิจิทัล", "account": "020009379031\n20009379031", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 15000.0, "remark": ""}, {"no": 95, "code": "0753010", "bu": "บริษัท บิซ มอเตอร์ส จำกัด (BMT)", "name": "นางสาวกัลยา ญาณรังษี", "position": "ผู้ช่วยผู้จัดการฝ่ายศูนย์บริการและอะไหล่", "department": "ลูกค้าสัมพันธ์", "award": "พนักงานอายุงาน 15 ปี", "lottery": "400063752044", "lotteryType": "สลากออมสินดิจิทัล", "account": "20308885969", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 15000.0, "remark": ""}, {"no": 96, "code": "0753033", "bu": "บริษัท บิซ มอเตอร์ส จำกัด (BMT)", "name": "นายณัฐวุฒิ อุทัยเฉลิม", "position": "ผู้จัดการฝ่ายปฏิบัติการขาย (OM)", "department": "ฝ่ายขาย ทีม 2", "award": "พนักงานอายุงาน 15 ปี", "lottery": "400063825782", "lotteryType": "สลากออมสินดิจิทัล", "account": "20118961588", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 15000.0, "remark": ""}, {"no": 97, "code": "1953001", "bu": "บริษัท โตโยต้า ลิบรา จำกัด", "name": "นายสมพล บุตรเทศ", "position": "พนักงานช่าง", "department": "บริการทั่วไป (ซ่อม)", "award": "พนักงานอายุงาน 15 ปี", "lottery": "400087427201", "lotteryType": "สลากออมสินดิจิทัล", "account": "20391450523", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 15000.0, "remark": ""}, {"no": 98, "code": "1953002", "bu": "บริษัท โตโยต้า ลิบรา จำกัด", "name": "นายกรวุฒิ อ่อนศรี", "position": "เจ้าหน้าที่ตรวจสอบรถยนต์ใหม่", "department": "จัดสรรรถยนต์ใหม่", "award": "พนักงานอายุงาน 15 ปี", "lottery": "", "lotteryType": "", "account": "", "status": "", "statusRaw": "", "prize": 15000.0, "remark": ""}, {"no": 99, "code": "1953003", "bu": "บริษัท โตโยต้า ลิบรา จำกัด", "name": "นางสาววิจิตรา ขาใจ", "position": "เจ้าหน้าที่จัดซื้อ(อาวุโส)", "department": "จัดสรรรถยนต์ใหม่", "award": "พนักงานอายุงาน 15 ปี", "lottery": "400119345942", "lotteryType": "สลากออมสินดิจิทัล", "account": "20438125757", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 15000.0, "remark": ""}, {"no": 100, "code": "1953004", "bu": "บริษัท โตโยต้า ลิบรา จำกัด", "name": "นายพรชัย สุฉายา", "position": "หัวหน้าทีมช่าง", "department": "บริการทั่วไป (ซ่อม)", "award": "พนักงานอายุงาน 15 ปี", "lottery": "400096440559", "lotteryType": "สลากออมสินดิจิทัล", "account": "20403819186", "status": "INACTIVE", "statusRaw": "INACTIVE (ไม่มีการเข้าใช้งานมากกว่า 3 เดือน ให้ติดต่อสาขา)", "prize": 15000.0, "remark": ""}, {"no": 101, "code": "1953005", "bu": "บริษัท โตโยต้า ลิบรา จำกัด", "name": "นายจักรพงษ์ นิลเจริญ", "position": "พนักงานตรวจสภาพรถใหม่(PDI)(อาวุโส)", "department": "ปรับสภาพรถยนต์", "award": "พนักงานอายุงาน 15 ปี", "lottery": "", "lotteryType": "", "account": "", "status": "", "statusRaw": "", "prize": 15000.0, "remark": ""}, {"no": 102, "code": "1953006", "bu": "บริษัท โตโยต้า ลิบรา จำกัด", "name": "นางสาวกัณหา วงศาพูนทรัพย์", "position": "หัวหน้าทีมขาย", "department": "ขายรถยนต์ใหม่", "award": "พนักงานอายุงาน 15 ปี", "lottery": "", "lotteryType": "", "account": "", "status": "", "statusRaw": "", "prize": 15000.0, "remark": ""}, {"no": 103, "code": "0253042", "bu": "บริษัท ไทย วี.พี. คอร์ปอเรชั่น จำกัด (TVP)", "name": "นายพรชัย สว่างใจ", "position": "ผู้จัดการส่วนขายโครงการรถเช่า", "department": "ขายทีม F", "award": "พนักงานอายุงาน 15 ปี", "lottery": "400063820825", "lotteryType": "สลากออมสินดิจิทัล", "account": "20180648766", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 15000.0, "remark": ""}, {"no": 104, "code": "0253023", "bu": "บริษัท ไทย วี.พี. คอร์ปอเรชั่น จำกัด (TVP)", "name": "นายพงษ์พันธ์ สุขโชติ", "position": "พนักงานปฏิบัติการรถเช่า(อาวุโส)", "department": "ขายทีม H", "award": "พนักงานอายุงาน 15 ปี", "lottery": "400063916730", "lotteryType": "สลากออมสินดิจิทัล", "account": "20341625539", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 15000.0, "remark": ""}, {"no": 105, "code": "0253022", "bu": "บริษัท ไทย วี.พี. คอร์ปอเรชั่น จำกัด (TVP)", "name": "นายพสิษฐ์ หนูเพชร", "position": "ที่ปรึกษาการขายโครงการรถเช่า", "department": "ขายทีม I", "award": "พนักงานอายุงาน 15 ปี", "lottery": "400054716701", "lotteryType": "สลากออมสินดิจิทัล", "account": "20317741161", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 15000.0, "remark": ""}, {"no": 106, "code": "0253055", "bu": "บริษัท ไทย วี.พี. คอร์ปอเรชั่น จำกัด (TVP)", "name": "นางสาวพรสุรีย์ พรหมบุรี", "position": "ผู้จัดการส่วนรับจองรถยนต์", "department": "ขายบุคคลระยะสั้น สาทร", "award": "พนักงานอายุงาน 15 ปี", "lottery": "400063861878", "lotteryType": "สลากออมสินดิจิทัล", "account": "20360621971", "status": "INACTIVE", "statusRaw": "INACTIVE (ไม่มีการเข้าใช้งานมากกว่า 3 เดือน ให้ติดต่อสาขา)", "prize": 15000.0, "remark": ""}, {"no": 107, "code": "0353003", "bu": "บริษัท อีซูซุชัยเจริญกิจมอเตอร์ส จำกัด (ICCK)", "name": "นายปรีชา ลิมปชัย", "position": "ที่ปรึกษาการขาย (SC)", "department": "ขายทีม B", "award": "พนักงานอายุงาน 15 ปี", "lottery": "400063856233", "lotteryType": "สลากออมสินดิจิทัล", "account": "20360612632", "status": "INACTIVE", "statusRaw": "INACTIVE (ไม่มีการเข้าใช้งานมากกว่า 3 เดือน ให้ติดต่อสาขา)", "prize": 15000.0, "remark": ""}, {"no": 108, "code": "0853033", "bu": "บริษัท เลกซัส ออโต้ ซิตี้ จำกัด  (LAC)", "name": "นางวาณี กรุดอินทร์", "position": "ผู้จัดการฝ่ายทรัพยากรบุคคลและธุรการ", "department": "สำนักกรรมการบริหาร", "award": "พนักงานอายุงาน 15 ปี", "lottery": "400063797395", "lotteryType": "สลากออมสินดิจิทัล", "account": "20360509176", "status": "INACTIVE", "statusRaw": "INACTIVE (ไม่มีการเข้าใช้งานมากกว่า 3 เดือน ให้ติดต่อสาขา)", "prize": 15000.0, "remark": ""}, {"no": 109, "code": "0853024", "bu": "บริษัท เลกซัส ออโต้ ซิตี้ จำกัด  (LAC)", "name": "นางสาวอิสราภรณ์ ยศอาลัย", "position": "ผู้จัดการส่วนขาย (SM)", "department": "ขายทีม A", "award": "พนักงานอายุงาน 15 ปี", "lottery": "400039992575", "lotteryType": "สลากออมสินดิจิทัล", "account": "20246868390", "status": "INACTIVE", "statusRaw": "INACTIVE (ไม่มีการเข้าใช้งานมากกว่า 3 เดือน ให้ติดต่อสาขา)", "prize": 15000.0, "remark": ""}, {"no": 110, "code": "0853010", "bu": "บริษัท เลกซัส ออโต้ ซิตี้ จำกัด  (LAC)", "name": "นางสาวจันทร์เพ็ญ เกตุพันธ์", "position": "ผู้จัดการทีมขาย (STM)", "department": "ขายทีม A", "award": "พนักงานอายุงาน 15 ปี", "lottery": "400043625682", "lotteryType": "สลากออมสินดิจิทัล", "account": "20277532725", "status": "INACTIVE", "statusRaw": "INACTIVE (ไม่มีการเข้าใช้งานมากกว่า 3 เดือน ให้ติดต่อสาขา)", "prize": 15000.0, "remark": ""}, {"no": 111, "code": "0853008", "bu": "บริษัท เลกซัส ออโต้ ซิตี้ จำกัด  (LAC)", "name": "นางสาวหนึ่งฤทัย รู้อยู่", "position": "เจ้าหน้าที่อะไหล่(อาวุโส)", "department": "อะไหล่", "award": "พนักงานอายุงาน 15 ปี", "lottery": "400063795191", "lotteryType": "สลากออมสินดิจิทัล", "account": "20108597616", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 15000.0, "remark": ""}, {"no": 112, "code": "0853016", "bu": "บริษัท เลกซัส ออโต้ ซิตี้ จำกัด  (LAC)", "name": "นางสาวศิริพร สาสิงห์", "position": "เจ้าหน้าที่แคชเชียร์", "department": "บัญชีและการเงิน", "award": "พนักงานอายุงาน 15 ปี", "lottery": "400063795571", "lotteryType": "สลากออมสินดิจิทัล", "account": "20119126868", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 15000.0, "remark": ""}, {"no": 113, "code": "1948001", "bu": "บริษัท โตโยต้า ลิบรา จำกัด", "name": "นางดวงกมล รัตนถาวร", "position": "ผู้จัดการส่วนลูกค้าสัมพันธ์", "department": "Call Center และลูกค้าสัมพันธ์", "award": "พนักงานอายุงาน 20 ปี", "lottery": "400073788830", "lotteryType": "สลากออมสินดิจิทัล", "account": "20374543294", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 20000.0, "remark": ""}, {"no": 114, "code": "1948002", "bu": "บริษัท โตโยต้า ลิบรา จำกัด", "name": "นายจิรัชชัย จินดาทอง", "position": "หัวหน้างานแผนกตรวจสอบรถยนต์ใหม่", "department": "จัดสรรรถยนต์ใหม่", "award": "พนักงานอายุงาน 20 ปี", "lottery": "", "lotteryType": "", "account": "", "status": "", "statusRaw": "", "prize": 20000.0, "remark": ""}, {"no": 115, "code": "1948003", "bu": "บริษัท โตโยต้า ลิบรา จำกัด", "name": "นางสาวปริญา กรจันทร์", "position": "ผู้ช่วยผู้จัดการส่วนงาน PDI", "department": "จัดสรรรถยนต์ใหม่", "award": "พนักงานอายุงาน 20 ปี", "lottery": "400127807693", "lotteryType": "สลากออมสินดิจิทัล", "account": "20434906069", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 20000.0, "remark": ""}, {"no": 116, "code": "1948004", "bu": "บริษัท โตโยต้า ลิบรา จำกัด", "name": "นางสาวเบญญาภา กาญจนวิสูตร", "position": "พนักงานช่าง", "department": "บริการซ่อมสีและตัวถัง", "award": "พนักงานอายุงาน 20 ปี", "lottery": "400079247963", "lotteryType": "สลากออมสินดิจิทัล", "account": "20044348587", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 20000.0, "remark": ""}, {"no": 117, "code": "1948005", "bu": "บริษัท โตโยต้า ลิบรา จำกัด", "name": "นายภคพงษ์ ฟั่นทา", "position": "ผู้ช่วยผู้จัดการส่วนซ่อม", "department": "หัวหน้าทีม(งานซ่อม)", "award": "พนักงานอายุงาน 20 ปี", "lottery": "", "lotteryType": "สลากออมสินดิจิทัล", "account": "", "status": "", "statusRaw": "", "prize": 20000.0, "remark": ""}, {"no": 118, "code": "1948006", "bu": "บริษัท โตโยต้า ลิบรา จำกัด", "name": "นายปิยวัฒน์ นามโคตร", "position": "ผู้ช่วยผู้จัดการส่วนตรวจสอบคุณภาพ", "department": "หัวหน้าทีม(BP)", "award": "พนักงานอายุงาน 20 ปี", "lottery": "400074860547", "lotteryType": "สลากออมสินดิจิทัล", "account": "20375845144", "status": "INACTIVE", "statusRaw": "INACTIVE (ไม่มีการเข้าใช้งานมากกว่า 3 เดือน ให้ติดต่อสาขา)", "prize": 20000.0, "remark": ""}, {"no": 119, "code": "1948007", "bu": "บริษัท โตโยต้า ลิบรา จำกัด", "name": "นายปราโมช นุ่มนวล", "position": "ผู้จัดการฝ่ายบริการ", "department": "หัวหน้าทีม(งานซ่อม)", "award": "พนักงานอายุงาน 20 ปี", "lottery": "", "lotteryType": "", "account": "", "status": "", "statusRaw": "", "prize": 20000.0, "remark": ""}, {"no": 120, "code": "1948009", "bu": "บริษัท โตโยต้า ลิบรา จำกัด", "name": "นางสาวธนพัฒนา เตลิงกุล", "position": "เจ้าหน้าที่ธุรการศูนย์บริการ(อาวุโส)", "department": "สนับสนุน (BP)", "award": "พนักงานอายุงาน 20 ปี", "lottery": "", "lotteryType": "", "account": "", "status": "", "statusRaw": "", "prize": 20000.0, "remark": ""}, {"no": 121, "code": "0348018", "bu": "บริษัท อีซูซุชัยเจริญกิจมอเตอร์ส จำกัด (ICCK)", "name": "นายกมนทัต ปัญญาธนภูมิ", "position": "ผู้จัดการส่วนขายรถใหญ่", "department": "ขายรถใหญ่", "award": "พนักงานอายุงาน 20 ปี", "lottery": "400063855011", "lotteryType": "สลากออมสินดิจิทัล", "account": "20360610479", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 20000.0, "remark": ""}, {"no": 122, "code": "0348017", "bu": "บริษัท อีซูซุชัยเจริญกิจมอเตอร์ส จำกัด (ICCK)", "name": "นายเมธาสิทธิ์ ทวีอาภา", "position": "หัวหน้าทีมช่าง", "department": "หัวหน้าทีม(งานซ่อม)", "award": "พนักงานอายุงาน 20 ปี", "lottery": "400063855649", "lotteryType": "สลากออมสินดิจิทัล", "account": "20250476049", "status": "INACTIVE", "statusRaw": "INACTIVE (ไม่มีการเข้าใช้งานมากกว่า 3 เดือน ให้ติดต่อสาขา)", "prize": 20000.0, "remark": ""}, {"no": 123, "code": "0348014", "bu": "บริษัท อีซูซุชัยเจริญกิจมอเตอร์ส จำกัด (ICCK)", "name": "นางสาวภัณฑิรา สุวรรณเทศ", "position": "ผู้จัดการทั่วไป", "department": "สำนักกรรมการบริหาร", "award": "พนักงานอายุงาน 20 ปี", "lottery": "400063805651", "lotteryType": "สลากออมสินดิจิทัล", "account": "20011067772", "status": "ACTIVE", "statusRaw": "ACTIVE", "prize": 20000.0, "remark": ""}, {"no": 124, "code": "0348016", "bu": "บริษัท อีซูซุชัยเจริญกิจมอเตอร์ส จำกัด (ICCK)", "name": "นายสยุมภูว์ เจียรวัฒนาวิทย์", "position": "ผู้ช่วยผู้จัดการฝ่ายศูนย์บริการและอะไหล่", "department": "ศูนย์บริการ", "award": "พนักงานอายุงาน 20 ปี", "lottery": "400063805503", "lotteryType": "สลากออมสินดิจิทัล", "account": "20092542529", "status": "INACTIVE", "statusRaw": "INACTIVE (ไม่มีการเข้าใช้งานมากกว่า 3 เดือน ให้ติดต่อสาขา)", "prize": 20000.0, "remark": ""}, {"no": 125, "code": "1443001", "bu": "บริษัท วี.พี. แคปปิตอล แอสเซ็ทส์ จำกัด", "name": "นายประจักร์ สุวัตถี", "position": "รองหัวหน้าแผนกซ่อมบำรุง", "department": "ส่วนแม่บ้าน", "award": "พนักงานอายุงาน 25 ปี", "lottery": "400063845012", "lotteryType": "สลากออมสินดิจิทัล", "account": "20360593105", "status": "INACTIVE", "statusRaw": "INACTIVE (ไม่มีการเข้าใช้งานมากกว่า 3 เดือน ให้ติดต่อสาขา)", "prize": 25000.0, "remark": ""}, {"no": 126, "code": "0238004", "bu": "บริษัท ไทย วี.พี. คอร์ปอเรชั่น จำกัด (TVP)", "name": "นายนภดล สุพละเศรษฐ์", "position": "ประธานเจ้าหน้าที่บริหาร (CEO)", "department": "สำนักกรรมการบริหาร", "award": "พนักงานอายุงาน 30 ปี", "lottery": "400063842159", "lotteryType": "สลากออมสินดิจิทัล", "account": "20360588253", "status": "INACTIVE", "statusRaw": "INACTIVE (ไม่มีการเข้าใช้งานมากกว่า 3 เดือน ให้ติดต่อสาขา)", "prize": 30000.0, "remark": ""}];
+
+    const fmtNumber = new Intl.NumberFormat('th-TH');
+    const fmtMoney = new Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB', maximumFractionDigits: 0 });
+
+    const el = (id) => document.getElementById(id);
+
+    function uniqueSorted(values) {
+      return [...new Set(values.filter(Boolean))].sort((a, b) => a.localeCompare(b, 'th'));
+    }
+
+    function groupByCount(rows, key) {
+      const map = new Map();
+      rows.forEach(row => map.set(row[key] || 'ไม่ระบุ', (map.get(row[key] || 'ไม่ระบุ') || 0) + 1));
+      return [...map.entries()].map(([name, count]) => ({ name, count })).sort((a, b) => b.count - a.count);
+    }
+
+    function groupPrize(rows) {
+      const map = new Map();
+      rows.forEach(row => map.set(row.prize, (map.get(row.prize) || 0) + 1));
+      return [...map.entries()].map(([value, count]) => ({ value: Number(value), count })).sort((a, b) => a.value - b.value);
+    }
+
+    function summarize(rows) {
+      const totalPeople = rows.length;
+      const totalPrize = rows.reduce((sum, row) => sum + Number(row.prize || 0), 0);
+      const withLottery = rows.filter(row => row.lottery).length;
+      const withoutLottery = totalPeople - withLottery;
+      const active = rows.filter(row => row.status === 'ACTIVE').length;
+      const inactive = rows.filter(row => row.status === 'INACTIVE').length;
+      const missingStatus = rows.filter(row => !row.status).length;
+      const remarks = rows.filter(row => row.remark).length;
+      return { totalPeople, totalPrize, withLottery, withoutLottery, active, inactive, missingStatus, remarks };
+    }
+
+    function barList(targetId, data, color = 'navy') {
+      const max = Math.max(...data.map(item => item.count), 1);
+      const colorClass = color === 'red' ? ' red' : '';
+      el(targetId).innerHTML = data.map(item => `
+        <div class="bar-row">
+          <div class="bar-meta"><span class="bar-name" title="${escapeHtml(item.name)}">${escapeHtml(item.name)}</span><span class="bar-count">${fmtNumber.format(item.count)} คน</span></div>
+          <div class="bar-track"><div class="bar-fill${colorClass}" style="width:${(item.count / max) * 100}%"></div></div>
+        </div>
+      `).join('') || '<p class="sub">ไม่พบข้อมูล</p>';
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? '').replace(/[&<>'"]/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#039;', '"': '&quot;' }[char]));
+    }
+
+    function renderRemarkList(rows) {
+      const remarkRows = rows.filter(row => row.remark);
+      el('remarkList').innerHTML = remarkRows.map(row => `
+        <li>${escapeHtml(row.name)} - ${escapeHtml(row.remark)}</li>
+      `).join('');
+    }
+
+    function statusPill(status) {
+      if (status === 'ACTIVE') return '<span class="pill active">ACTIVE</span>';
+      if (status === 'INACTIVE') return '<span class="pill inactive">INACTIVE</span>';
+      return '<span class="pill missing">ไม่มีข้อมูล</span>';
+    }
+
+    function renderTable(rows) {
+      const viewLabels = { all: 'ข้อมูลทั้งหมด', withLottery: 'ผู้มีทะเบียนสลาก', withoutLottery: 'รายการต้องตรวจสอบ', inactive: 'สถานะ INACTIVE', remark: 'รายการมีหมายเหตุ' };
+      el('tableSub').textContent = `แสดง ${fmtNumber.format(rows.length)} รายการ | มุมมอง: ${viewLabels[currentView] || 'ข้อมูลทั้งหมด'}`;
+      el('detailRows').innerHTML = rows.map(row => `
+        <tr>
+          <td>${row.no}</td>
+          <td>${escapeHtml(row.bu)}</td>
+          <td>${escapeHtml(row.name)}</td>
+          <td>${escapeHtml(row.position)}</td>
+          <td>${escapeHtml(row.department)}</td>
+          <td>${escapeHtml(row.award)}</td>
+          <td>${row.lottery ? escapeHtml(row.lottery) : '-'}</td>
+          <td>${statusPill(row.status)}</td>
+          <td class="money">${fmtMoney.format(row.prize)}</td>
+          <td class="${row.remark ? 'remark-cell' : ''}">${row.remark ? escapeHtml(row.remark) : '-'}</td>
+        </tr>
+      `).join('');
+    }
+
+    let currentView = 'all';
+
+    function matchesView(row) {
+      if (currentView === 'withLottery') return Boolean(row.lottery);
+      if (currentView === 'withoutLottery') return !row.lottery || !row.status;
+      if (currentView === 'inactive') return row.status === 'INACTIVE';
+      if (currentView === 'remark') return Boolean(row.remark);
+      return true;
+    }
+
+    function scrollToDetails() {
+      el('detailSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function applyView(viewName) {
+      currentView = viewName || 'all';
+      render();
+      scrollToDetails();
+    }
+
+    function getFilteredRows() {
+      const bu = el('buFilter').value;
+      const q = el('searchInput').value.trim().toLowerCase();
+      return DATA.filter(row => {
+        const matchBu = bu === 'ทั้งหมด' || row.bu === bu;
+        const text = `${row.bu} ${row.name} ${row.position} ${row.department} ${row.award} ${row.status} ${row.lottery} ${row.remark}`.toLowerCase();
+        const matchSearch = !q || text.includes(q);
+        return matchBu && matchSearch && matchesView(row);
+      });
+    }
+
+    function render() {
+      const rows = getFilteredRows();
+      const summary = summarize(rows);
+      const bu = el('buFilter').value;
+      const lotteryPercent = summary.totalPeople ? Math.round((summary.withLottery / summary.totalPeople) * 100) : 0;
+      const activePercent = summary.withLottery ? Math.round((summary.active / summary.withLottery) * 100) : 0;
+      const inactivePercent = summary.withLottery ? Math.round((summary.inactive / summary.withLottery) * 100) : 0;
+      const missingPercent = summary.totalPeople ? Math.round((summary.missingStatus / summary.totalPeople) * 100) : 0;
+
+      el('heroMoney').textContent = fmtMoney.format(summary.totalPrize);
+      el('selectedBuText').textContent = bu;
+      el('totalPeople').textContent = `${fmtNumber.format(summary.totalPeople)} คน`;
+      el('totalPrize').textContent = fmtMoney.format(summary.totalPrize);
+      el('withLottery').textContent = `${fmtNumber.format(summary.withLottery)} คน`;
+      el('withoutLottery').textContent = `${fmtNumber.format(summary.withoutLottery)} คน`;
+      el('lotteryPercent').textContent = `${lotteryPercent}% ของรายการที่เลือก`;
+      el('activeCount').textContent = `${fmtNumber.format(summary.active)} คน`;
+      el('inactiveCount').textContent = `${fmtNumber.format(summary.inactive)} คน`;
+      el('missingStatus').textContent = `${fmtNumber.format(summary.missingStatus)} คน`;
+      el('activePercent').textContent = `${activePercent}% ของรายการที่มีทะเบียนสลาก`;
+      el('inactivePercent').textContent = `${inactivePercent}% ของรายการที่มีทะเบียนสลาก`;
+      el('missingPercent').textContent = `${missingPercent}% ของรายการที่เลือก`;
+
+      const buBars = bu === 'ทั้งหมด' ? groupByCount(rows, 'bu') : [{ name: bu, count: rows.length }];
+      barList('buBars', buBars, 'navy');
+      barList('awardBars', groupByCount(rows, 'award'), 'red');
+      renderRemarkList(rows);
+
+      el('remarkText').textContent = `มีรายการ “ตรวจสอบวันลาเกิน” จำนวน ${fmtNumber.format(summary.remarks)} รายการ ตามตัวกรองปัจจุบัน`;
+
+      renderTable(rows);
+    }
+
+    function init() {
+      const buOptions = ['ทั้งหมด', ...uniqueSorted(DATA.map(row => row.bu))];
+      el('buFilter').innerHTML = buOptions.map(item => `<option value="${escapeHtml(item)}">${escapeHtml(item)}</option>`).join('');
+      el('buFilter').addEventListener('change', render);
+      el('searchInput').addEventListener('input', render);
+      el('resetBtn').addEventListener('click', () => {
+        el('buFilter').value = 'ทั้งหมด';
+        el('searchInput').value = '';
+        currentView = 'all';
+        render();
+      });
+
+      document.querySelectorAll('[data-view]').forEach(button => {
+        button.addEventListener('click', () => applyView(button.dataset.view));
+      });
+      render();
+    }
+
+    init();
+  </script>
+</body>
+</html>
